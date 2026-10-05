@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Anti-Distraction - Painel da Extensão</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container">
+    
+    <!-- Top Header -->
+    <header class="popup-header">
+      <div class="brand">
+        <img src="icons/icon32.png" alt="Logo" class="logo">
+        <div>
+          <div class="title">Anti-Distraction <span class="badge">PRO</span></div>
+          <div class="subtitle">Sentinela para Vídeos e Reuniões</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- BIG MASTER ON / OFF TOGGLE CARD -->
+    <div id="masterPowerCard" class="master-power-card active">
+      <div class="power-status-row">
+        <div class="power-indicator-dot"></div>
+        <div class="power-status-info">
+          <div id="powerTitle" class="power-title">SENTINELA ATIVA</div>
+          <div id="powerSubtitle" class="power-sub">Vigiando vídeos e reuniões</div>
+        </div>
+      </div>
+      <button id="btnTogglePower" class="btn-master-toggle">
+        <span id="btnToggleIcon">⏸️</span>
+        <span id="btnToggleText">DESATIVAR SENTINELA</span>
+      </button>
+    </div>
+
+    <!-- Supported Platforms Quick Status -->
+    <div class="platform-strip">
+      <div class="platform-item active" title="Ativa legendas automaticamente para escutar">
+        <span class="p-dot"></span> YouTube Auto-CC
+      </div>
+      <div class="platform-item active" title="Lê legendas no Google Meet">
+        <span class="p-dot"></span> Google Meet
+      </div>
+      <div class="platform-item active" title="Funciona em qualquer aba com vídeo ou live">
+        <span class="p-dot"></span> Lives & Teams
+      </div>
+    </div>
+
+    <!-- Keywords Section -->
+    <section class="section">
+      <div class="section-header">
+        <span class="section-title">Palavras-Chave (<span id="kwCount">0</span>)</span>
+        <button id="btnQuickTest" class="btn-test-link" title="Testar Alerta Sonoro e Visual">🔔 Testar Sinal</button>
+      </div>
+      
+      <div class="kw-form">
+        <input type="text" id="inputKw" placeholder="Ex: meu nome, prova, urgente..." maxlength="30">
+        <button id="btnAdd" class="btn-add">Adicionar</button>
+      </div>
+
+      <!-- Quick Preset Buttons -->
+      <div class="quick-presets">
+        <button class="btn-preset-mini" data-preset="academic">🎓 Aulas</button>
+        <button class="btn-preset-mini" data-preset="meeting">💼 Reunião</button>
+        <button class="btn-preset-mini" data-preset="lives">📺 Lives</button>
+      </div>
+
+      <div id="kwList" class="kw-tags">
+        <!-- Dynamically rendered -->
+      </div>
+    </section>
+
+    <!-- Footer Actions -->
+    <footer class="popup-footer">
+      <button id="btnOpenDashboard" class="btn-dashboard">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+        Abrir Dashboard Web Completo
+      </button>
+    </footer>
+
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

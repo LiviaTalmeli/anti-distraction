@@ -1,0 +1,226 @@
+/* Anti-Distraction In-Tab HUD & Floating Widget Styling */
+
+/* Fullscreen flashing border alert */
+#anti-distraction-screen-flash,
+#focuswake-screen-flash {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 2147483646;
+  box-shadow: inset 0 0 90px rgba(239, 68, 68, 0.9), inset 0 0 30px rgba(239, 68, 68, 0.95);
+  animation: fwFlashAnim 0.6s infinite alternate ease-in-out;
+  display: none;
+}
+
+@keyframes fwFlashAnim {
+  0% { opacity: 0.3; }
+  100% { opacity: 1; }
+}
+
+/* Floating on-screen HUD Alert (When keyword triggered) */
+#anti-distraction-floating-hud,
+#focuswake-floating-hud {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 2147483647;
+  background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+  border: 2px solid #ef4444;
+  border-radius: 14px;
+  padding: 16px 20px;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.8), 0 0 30px rgba(239, 68, 68, 0.5);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: #fff;
+  max-width: 380px;
+  display: none;
+  animation: fwHudSlideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes fwHudSlideIn {
+  from { transform: translateY(-30px) scale(0.9); opacity: 0; }
+  to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.fw-hud-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.fw-hud-badge {
+  background: rgba(239, 68, 68, 0.25);
+  border: 1px solid #ef4444;
+  color: #f87171;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 999px;
+  letter-spacing: 0.5px;
+}
+
+.fw-hud-close {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  font-size: 18px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 2px;
+}
+
+.fw-hud-close:hover {
+  color: #fff;
+}
+
+.fw-hud-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 6px;
+}
+
+.fw-hud-title span {
+  color: #ef4444;
+  text-decoration: underline;
+}
+
+.fw-hud-snippet {
+  font-size: 12px;
+  color: #e2e8f0;
+  line-height: 1.4;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 8px 12px;
+  border-radius: 8px;
+  border-left: 3px solid #ef4444;
+}
+
+/* Floating On-Screen Control Pill (Always visible indicator & toggle) */
+#anti-distraction-floating-pill,
+#focuswake-floating-pill {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 2147483640;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 242, 254, 0.4);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 14px rgba(0, 242, 254, 0.2);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: #fff;
+  font-size: 12px;
+  user-select: none;
+  transition: all 0.25s ease;
+}
+
+#anti-distraction-floating-pill:hover,
+#focuswake-floating-pill:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 242, 254, 0.35);
+}
+
+#anti-distraction-floating-pill.paused,
+#focuswake-floating-pill.paused {
+  border-color: rgba(239, 68, 68, 0.5);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 14px rgba(239, 68, 68, 0.2);
+}
+
+.fw-pill-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #00f2fe;
+  box-shadow: 0 0 8px #00f2fe;
+}
+
+#anti-distraction-floating-pill.paused .fw-pill-indicator,
+#focuswake-floating-pill.paused .fw-pill-indicator {
+  background: #ef4444;
+  box-shadow: 0 0 8px #ef4444;
+}
+
+.fw-pill-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.fw-pill-text {
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  color: #fff;
+  font-size: 11px;
+}
+
+.fw-pill-ticker {
+  font-size: 9px;
+  color: #94a3b8;
+  max-width: 220px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: monospace;
+}
+
+.fw-pill-btn-toggle {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.fw-pill-btn-toggle:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+#anti-distraction-floating-pill.paused .fw-pill-btn-toggle,
+#focuswake-floating-pill.paused .fw-pill-btn-toggle {
+  background: #00f2fe;
+  color: #05070c;
+  border-color: #00f2fe;
+}
+
+/* Subtle YouTube Banner notification when subtitles are enabled */
+#anti-distraction-hint,
+#focuswake-yt-hint {
+  position: fixed;
+  top: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2147483640;
+  background: rgba(15, 23, 42, 0.95);
+  border: 1px solid #00f2fe;
+  color: #00f2fe;
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  animation: fwFadeInOut 4.5s forwards ease-in-out;
+}
+
+@keyframes fwFadeInOut {
+  0% { opacity: 0; transform: translate(-50%, -20px); }
+  15% { opacity: 1; transform: translate(-50%, 0); }
+  85% { opacity: 1; transform: translate(-50%, 0); }
+  100% { opacity: 0; transform: translate(-50%, -20px); pointer-events: none; }
+}

@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anti-Distraction - Dashboard Completo</title>
+  <link rel="icon" type="image/png" href="icons/icon32.png">
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+
+  <!-- Background decorative light mesh -->
+  <div class="bg-mesh">
+    <div class="mesh-circle-1"></div>
+    <div class="mesh-circle-2"></div>
+  </div>
+
+  <div class="app-container">
+    
+    <!-- Top Header -->
+    <header class="app-header">
+      <div class="brand-wrapper">
+        <img src="icons/icon48.png" alt="Anti-Distraction Logo" class="brand-logo-img">
+        <div class="brand-text">
+          <h1>Anti-Distraction <span class="brand-badge">EXTENSÃO PRO</span></h1>
+          <p>Painel Integrado da Sentinela para Vídeos, Aulas, Lives e Reuniões</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button id="btnSyncExtension" class="sync-badge-btn" style="padding: 8px 16px; font-size: 0.85rem;" title="Sincronizar dados com o armazenamento local da extensão">
+          🔄 Sincronizado com Chrome
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Dashboard Grid -->
+    <main class="dashboard-grid">
+      
+      <!-- Left Column: Controls & Keywords -->
+      <div class="left-panel">
+        
+        <!-- Activation Card -->
+        <section class="glass-card activation-card" aria-label="Painel de Ativação">
+          <div class="card-header">
+            <h2 class="card-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v10"></path><path d="M18.4 6.6a9 9 0 1 1-12.77.04"></path></svg>
+              Controle da Sentinela
+            </h2>
+          </div>
+
+          <div class="activation-toggle-box">
+            <button id="powerBtn" class="btn-power" title="Ligar / Desligar Vigilância">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2v10"></path><path d="M18.4 6.6a9 9 0 1 1-12.77.04"></path></svg>
+            </button>
+            <div id="statusLabel" class="status-label">Sentinela Desativada</div>
+            <div id="statusSubtitle" class="status-subtitle">Clique no botão para iniciar a escuta</div>
+          </div>
+
+          <!-- Source Selector -->
+          <div class="source-selection">
+            <span class="source-label">Modos de Escuta:</span>
+            <div class="source-buttons">
+              <button id="sourceMic" class="btn-source active" title="Escutar via Microfone / Ambiente">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+                Microfone
+              </button>
+              <button id="sourceTab" class="btn-source" title="Capturar áudio direto da aba do YouTube / Meet / Vídeo">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                Aba / Janela
+              </button>
+            </div>
+            
+            <button id="btnSimulate" class="btn-simulate" title="Testar o sistema com simulação de falas reais sem falar nada">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+              Modo Teste / Simulação de Aula
+            </button>
+          </div>
+
+          <!-- Live Audio Visualizer & VU Meter -->
+          <div class="visualizer-wrapper">
+            <div class="visualizer-header">
+              <span>Osciloscópio & Sensibilidade</span>
+              <span id="audioStatusBadge" style="color: var(--accent-cyan);">Ao Vivo</span>
+            </div>
+            <canvas id="visualizerCanvas" class="visualizer-canvas"></canvas>
+            
+            <!-- Real-time Microphone Decibel / Volume VU Meter -->
+            <div class="vu-meter-container" title="Nível real de som captado pelo microfone">
+              <div class="vu-label-row">
+                <span>Nível de Entrada de Som:</span>
+                <span id="vuLevelText">0%</span>
+              </div>
+              <div class="vu-track">
+                <div id="vuBar" class="vu-bar" style="width: 0%;"></div>
+              </div>
+            </div>
+
+            <!-- Mic Gain / Booster Slider -->
+            <div class="gain-booster-row">
+              <span style="font-size: 0.75rem; color: var(--text-dim);">Ganho / Amplificador do Microfone:</span>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <input type="range" id="gainSlider" class="range-slider" min="1" max="5" step="0.5" value="1.5">
+                <span id="gainValueText" style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--accent-cyan);">1.5x</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- YouTube Direct Sentinel Player Card -->
+          <div class="youtube-player-card">
+            <div class="card-header" style="padding-bottom: 8px; margin-bottom: 0;">
+              <h3 style="font-size: 0.95rem; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 8px;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="#ef4444"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                Sentinela YouTube Direta no App
+              </h3>
+            </div>
+            <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;">
+              Cole o link de qualquer vídeo ou aula do YouTube para vigiar e transcrever com precisão aqui mesmo:
+            </p>
+            <div class="yt-input-group">
+              <input type="text" id="ytUrlInput" class="input-keyword" placeholder="Cole a URL (ex: https://youtube.com/watch?v=...)">
+              <button id="btnLoadYt" class="btn-source active" style="white-space: nowrap;">▶️ Vigiar</button>
+              <button id="btnDemoYt" class="btn-test-sound" title="Carregar vídeo de exemplo imediatamente">⚡ Teste Rápido</button>
+            </div>
+            <div id="ytPlayerContainer" class="yt-player-container" style="display: none; margin-top: 10px;">
+              <div id="ytIframeWrapper" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 10px; border: 1px solid rgba(0, 242, 254, 0.3);">
+                <div id="ytPlayer"></div>
+              </div>
+              <div id="ytStatusInfo" style="font-size: 0.8rem; color: #00f2fe; margin-top: 8px; font-family: var(--font-mono);"></div>
+            </div>
+          </div>
+
+          <!-- Local Video File Player Card -->
+          <div class="local-file-card">
+            <div class="local-file-header">
+              <span style="font-size: 0.8rem; font-weight: 700; color: #fff;">📁 Abrir Vídeo/Áudio do Computador</span>
+              <label for="localFileInput" class="btn-choose-file">
+                Escolher Arquivo
+              </label>
+              <input type="file" id="localFileInput" accept="video/*,audio/*" style="display: none;">
+            </div>
+            <div id="localVideoContainer" class="local-video-container" style="display: none;">
+              <video id="localVideoPlayer" controls class="local-video-player"></video>
+              <div id="localVideoInfo" class="local-video-info"></div>
+            </div>
+            <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 6px;">
+              Tem uma gravação de aula, palestra ou vídeo no seu computador? Abra o arquivo aqui para escuta direta!
+            </p>
+          </div>
+
+          <!-- Audio Diagnostic Notice -->
+          <div class="audio-notice-box">
+            <div style="display: flex; align-items: center; gap: 6px; font-weight: 700; color: #00f2fe; font-size: 0.8rem;">
+              <span>💡 Dica de Foco & Áudio:</span>
+            </div>
+            <p style="font-size: 0.75rem; color: var(--text-muted); line-height: 1.5; margin-top: 4px;">
+              • <strong>No YouTube / Meet:</strong> A <strong>Extensão Anti-Distraction</strong> sincroniza automaticamente com este painel e lê o áudio com transcrição direta!<br>
+              • <strong>Vídeos no PC:</strong> Carregue o arquivo no botão acima ou aumente o som dos alto-falantes se usar microfone. Se usar fones, a extensão no navegador é a melhor opção!
+            </p>
+          </div>
+
+          <!-- Language Selection -->
+          <div class="language-selector">
+            <label for="langSelect">Idioma de Transcrição:</label>
+            <select id="langSelect" class="custom-select">
+              <option value="pt-BR">🇧🇷 Português (Brasil)</option>
+              <option value="en-US">🇺🇸 English (US)</option>
+              <option value="es-ES">🇪🇸 Español</option>
+            </select>
+          </div>
+        </section>
+
+        <!-- Keyword Manager Card -->
+        <section class="glass-card keywords-card" aria-label="Gerenciador de Palavras-Chave">
+          <div class="card-header">
+            <h2 class="card-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+              Gatilhos & Palavras-Chave
+            </h2>
+          </div>
+
+          <!-- Preset Packages -->
+          <div class="presets-section">
+            <div class="preset-title">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              Adicionar Pacote Pronto:
+            </div>
+            <div class="presets-chips">
+              <button class="btn-preset" onclick="loadPreset('academic')">🎓 Aulas & Provas</button>
+              <button class="btn-preset" onclick="loadPreset('meeting')">💼 Trabalho & Daily</button>
+              <button class="btn-preset" onclick="loadPreset('lives')">📺 Lives & Sorteios</button>
+            </div>
+          </div>
+
+          <!-- Keyword Input Row -->
+          <div class="keyword-form-row">
+            <input type="text" id="kwInput" class="input-keyword" placeholder="Ex: meu nome, vai cair na prova..." maxlength="40">
+            <select id="kwCategory" class="custom-select" style="max-width: 110px;">
+              <option value="urgent">🔴 Urgente</option>
+              <option value="academic">🟡 Aula</option>
+              <option value="meeting">🔵 Pauta</option>
+              <option value="custom">🟣 Geral</option>
+            </select>
+            <button id="btnAddKw" class="btn-add-kw" title="Adicionar Palavra">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              Add
+            </button>
+          </div>
+
+          <!-- Keyword Badges List -->
+          <div id="keywordsList" class="keywords-list">
+            <!-- Dynamically populated -->
+          </div>
+        </section>
+
+      </div>
+
+      <!-- Right Column: Live Feed, Alerts & History -->
+      <div class="right-panel">
+        
+        <!-- Big Alert HUD (Triggered when keyword detected) -->
+        <div id="alertHudBanner" class="alert-hud-banner" role="alert">
+          <div class="alert-hud-left">
+            <div class="alert-hud-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+            </div>
+            <div class="alert-hud-details">
+              <h3 id="hudKeyword">Palavra-Chave Detectada!</h3>
+              <p id="hudContext">Sua atenção foi solicitada na reunião/vídeo!</p>
+            </div>
+          </div>
+          <div class="alert-hud-actions">
+            <button id="btnDismissHud" class="btn-hud-dismiss">Entendido (OK)</button>
+          </div>
+        </div>
+
+        <!-- Live Transcription Feed -->
+        <section class="glass-card transcription-card" aria-label="Transcrição ao Vivo">
+          <div class="card-header">
+            <h2 class="card-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+              Transcrição ao Vivo da Sessão
+            </h2>
+            <span style="font-size: 0.75rem; color: var(--text-dim); font-family: var(--font-mono);">Anti-Distraction Engine</span>
+          </div>
+
+          <div id="transcriptionStream" class="transcription-stream-wrapper">
+            <div id="transcriptEmptyState" class="transcript-empty-state">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              <p>Inicie a sentinela para ver a transcrição em tempo real.</p>
+              <span style="font-size: 0.75rem;">As palavras-chave serão destacadas e alertadas imediatamente.</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Signal & Alert Configurations -->
+        <section class="glass-card signal-settings-card" aria-label="Configurações de Alerta">
+          <div class="card-header">
+            <h2 class="card-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+              Sinais e Alertas Sensoriais
+            </h2>
+          </div>
+
+          <div class="settings-grid">
+            
+            <!-- Sound selector & volume -->
+            <div class="setting-item">
+              <div class="setting-label">
+                <span>Efeito Sonoro</span>
+                <button id="btnTestSound" class="btn-test-sound">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                  Ouvir
+                </button>
+              </div>
+              <select id="soundSelect" class="custom-select">
+                <option value="chime">🔔 Sino Suave (Harmônico)</option>
+                <option value="sonar">📡 Radar Sonar (Frequência)</option>
+                <option value="scifi">⚡ Sci-Fi Pulse (Moderno)</option>
+                <option value="buzzer">🚨 Despertador (Impossível perder)</option>
+              </select>
+              <div class="range-slider-row">
+                <span style="font-size: 0.75rem; color: var(--text-dim);">Volume:</span>
+                <input type="range" id="volumeSlider" class="range-slider" min="0" max="1" step="0.05" value="0.8">
+              </div>
+            </div>
+
+            <!-- Visual Flash -->
+            <div class="setting-item">
+              <div class="setting-label">
+                <span>Laser Pulsante na Tela</span>
+                <label class="switch">
+                  <input type="checkbox" id="toggleVisual" checked>
+                  <span class="slider-round"></span>
+                </label>
+              </div>
+              <p style="font-size: 0.75rem; color: var(--text-muted);">
+                Pisca a borda inteira do monitor com um contorno neon para chamar sua visão periférica.
+              </p>
+            </div>
+
+            <!-- Desktop Notification -->
+            <div class="setting-item">
+              <div class="setting-label">
+                <span>Notificação do Sistema</span>
+                <label class="switch">
+                  <input type="checkbox" id="toggleNotify" checked>
+                  <span class="slider-round"></span>
+                </label>
+              </div>
+              <p style="font-size: 0.75rem; color: var(--text-muted);">
+                Dispara um pop-up nativo do Windows/Mac mesmo se você estiver em outro programa.
+              </p>
+            </div>
+
+            <!-- Voice TTS -->
+            <div class="setting-item">
+              <div class="setting-label">
+                <span>Voz do Sistema (Falar)</span>
+                <label class="switch">
+                  <input type="checkbox" id="toggleTTS">
+                  <span class="slider-round"></span>
+                </label>
+              </div>
+              <p style="font-size: 0.75rem; color: var(--text-muted);">
+                Lê em voz alta no fone: "Atenção: palavra-chave detectada".
+              </p>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- Alert History & Log -->
+        <section class="glass-card history-card" aria-label="Histórico de Alertas">
+          <div class="card-header">
+            <h2 class="card-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+              Histórico de Detecções (<span id="alertCount">0</span>)
+            </h2>
+            <div style="display: flex; gap: 8px;">
+              <button id="btnExportHistory" class="btn-test-sound">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Exportar TXT
+              </button>
+              <button id="btnClearHistory" class="btn-test-sound" style="border-color: rgba(239, 68, 68, 0.4); color: #fca5a5;">
+                Limpar
+              </button>
+            </div>
+          </div>
+
+          <div id="historyList" class="history-list">
+            <!-- Dynamically populated -->
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <p>Anti-Distraction &copy; 2026 &bull; Desenvolvido com HTML5, Web Speech API e Web Audio Synthesizer &bull; Painel Integrado da Extensão</p>
+    </footer>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="dashboard.js"></script>
+</body>
+</html>

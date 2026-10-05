@@ -1,0 +1,58 @@
+{
+  "manifest_version": 3,
+  "name": "Anti-Distraction - Sentinela para Vídeos",
+  "version": "1.3.0",
+  "description": "Escuta e transcreve vídeos do YouTube, aulas e reuniões, alertando sobre palavras-chave pré-determinadas.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Anti-Distraction - Painel",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting",
+    "notifications"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.youtube.com/*",
+        "https://meet.google.com/*",
+        "https://teams.microsoft.com/*",
+        "https://*.zoom.us/*",
+        "https://www.twitch.tv/*",
+        "<all_urls>"
+      ],
+      "js": ["content.js"],
+      "css": ["content.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "youtube-bridge.js",
+        "icons/*",
+        "dashboard.html",
+        "dashboard.js",
+        "dashboard.css"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}
