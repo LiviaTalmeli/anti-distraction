@@ -4,13 +4,6 @@
   <strong>Aplicativo Web e Extensão que escuta e transcreve suas aulas, vídeos do YouTube, lives e reuniões, disparando alertas sonoros e visuais no instante em que palavras-chave escolhidas por você forem mencionadas.</strong>
 </p>
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Manifest-V3-blue?style=for-the-badge&logo=googlechrome" alt="Manifest V3">
-  <img src="https://img.shields.io/badge/Tech-HTML5_%7C_CSS3_%7C_JavaScript-00f2fe?style=for-the-badge&logo=javascript" alt="Vanilla JS">
-  <img src="https://img.shields.io/badge/Deploy-GitHub_Pages-22c55e?style=for-the-badge&logo=githubpages" alt="GitHub Pages">
-  <img src="https://img.shields.io/badge/License-MIT-purple?style=for-the-badge" alt="MIT License">
-</p>
-
 ---
 
 ## 💡 O Problema que o Anti-Distraction Resolve
