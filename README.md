@@ -1,8 +1,4 @@
-# 👁️⚡ Anti-Distraction — Sentinela para Vídeos, Aulas e Reuniões
-
-<p align="center">
-  <img src="assets/logo.jpg" alt="Anti-Distraction Logo" width="180" style="border-radius: 24px; box-shadow: 0 8px 30px rgba(0, 242, 254, 0.4);">
-</p>
+# Anti-Distraction — Sentinela para Vídeos, Aulas e Reuniões
 
 <p align="center">
   <strong>Aplicativo Web e Extensão que escuta e transcreve suas aulas, vídeos do YouTube, lives e reuniões, disparando alertas sonoros e visuais no instante em que palavras-chave escolhidas por você forem mencionadas.</strong>
@@ -84,64 +80,6 @@ Diferente de um microfone comum, o computador trata áudios de formas diferentes
 3. Clique em **"Carregar sem compactação"** *(Load unpacked)* e selecione a pasta `extension/` deste projeto.
 4. *(Se já havia carregado antes, clique no ícone de recarregar 🔄 no card do Anti-Distraction)*.
 5. Abra qualquer vídeo do YouTube ou Google Meet e veja a sentinela atuar!
-
----
-
-## 🚀 Como Publicar e Acessar no GitHub
-
-### Método 1: Script Automático
-Execute o arquivo `setup_github.bat` com um duplo-clique. Ele verificará seu Git e solicitará o link do seu repositório no GitHub para fazer o upload automaticamente.
-
-### Método 2: Comandos Manuais pelo Terminal
-```bash
-git init
-git add .
-git commit -m "feat: Anti-Distraction app and chrome extension"
-git remote add origin https://github.com/SEU_USUARIO/anti-distraction.git
-git branch -M main
-git push -u origin main
-```
-
-### Método 3: Pelo Navegador
-1. Crie um repositório no [github.com/new](https://github.com/new).
-2. Clique em **"uploading an existing file"**, arraste todos os arquivos desta pasta e confirme o commit!
-3. Vá em **Settings > Pages** e ative o **GitHub Actions** para ter o site online gratuitamente!
-
----
-
-## 📁 Estrutura de Arquivos
-
-```
-nova-pasta-6/
-├── assets/
-│   ├── logo.jpg               # Logo oficial Anti-Distraction
-│   ├── favicon.png            # Ícone 32x32 para web
-│   └── icon-128.png           # Ícone 128x128
-├── css/
-│   └── style.css              # Design System moderno, responsivo e temas
-├── js/
-│   └── app.js                 # Motor de sincronização, transcrição e áudio
-├── extension/                 # Extensão Oficial Manifest V3
-│   ├── manifest.json          # Manifest V3 (Anti-Distraction)
-│   ├── popup.html             # Painel popup da extensão
-│   ├── popup.css              # Estilos do popup
-│   ├── popup.js               # Lógica de controle e sincronização bidirecional
-│   ├── content.js             # Observador de legendas, ticker e bridge
-│   ├── content.css            # Estilos do widget e HUD flutuante
-│   ├── background.js          # Service worker e notificações
-│   └── icons/                 # Ícones 16, 32, 48 e 128px
-├── .github/
-│   └── workflows/
-│       └── deploy.yml         # Deploy automático no GitHub Pages
-├── .gitignore
-├── LICENSE                    # Licença MIT
-├── setup_github.bat           # Script para subir ao GitHub facilmente
-├── start_app.bat              # Script para iniciar localmente em 1 clique
-├── index.html                 # Aplicação Web Anti-Distraction
-└── README.md                  # Documentação completa
-```
-
----
 
 ## 📄 Licença
 Distribuído sob a licença **MIT**.
